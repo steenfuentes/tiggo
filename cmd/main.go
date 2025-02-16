@@ -7,6 +7,7 @@ import (
 
 	"github.com/joho/godotenv"
 
+	"github.com/steenfuentes/gogit/internal/git"
 	"github.com/steenfuentes/gogit/internal/llm"
 )
 
@@ -32,5 +33,13 @@ func main() {
 	if len(resp.Content) > 0 {
 		fmt.Printf("Response: %s\n", resp.Content[0].Text)
 	}
+
+	diffRange, err := git.NewDiffRange()
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+
+	fmt.Print(diffRange)
 
 }
