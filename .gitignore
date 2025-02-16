@@ -1,0 +1,36 @@
+# Binaries
+*.exe
+*.o
+
+# Test binaries
+*_test
+
+# Dependencies (Go modules)
+/vendor/
+go.sum
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Operating system files
+.DS_Store
+
+# Env files
+.env
+
+# Go specific
+*.out
+
+# Coverage files
+*.cov
+
+# Temporary files
+*~
+# Logs
+*.log
+logs/
+*.dev
+.dev/
