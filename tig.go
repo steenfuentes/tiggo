@@ -13,14 +13,18 @@ import (
 )
 
 func main() {
-
-	if err := godotenv.Load(); err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
 	apiKey := os.Getenv("ANTHROPIC_API_KEY")
+
+	// Try loading .env file if API key not found in OS env
 	if apiKey == "" {
-		log.Fatal("NO API KEY FOUND")
+		if err := godotenv.Load(); err != nil {
+			log.Printf("Warning: No .env file found, checking system environment")
+		}
+
+		apiKey = os.Getenv("ANTHROPIC_API_KEY")
+		if apiKey == "" {
+			log.Fatal("NO API KEY FOUND in system environment or .env file")
+		}
 	}
 
 	config, err := cli.ParseFlags()

@@ -103,7 +103,9 @@ tiggo --help
 
 ## Configuration
 
-The tool can load configuration variables from a `.env` file (e.g., your Anthropic API key). Create a `.env` file in the project root with the following content:
+The tool first checks for the API key in the system environment. If not found, it will check for a `.env` file in the directory where the command is executed.
+
+Set the `ANTHROPIC_API_KEY` environment variable or create a `.env` file with the following content:
 
 ```dotenv
 ANTHROPIC_API_KEY=your_api_key_here
