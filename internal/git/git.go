@@ -26,7 +26,7 @@ func WithEnd(end string) DiffOpt {
 }
 
 func NewDiffRange(opts ...DiffOpt) (*DiffRange, error) {
-	cmd := exec.Command("git", "merge-base", "main", "HEAD")
+	cmd := exec.Command("git", "merge-base", "origin/main", "HEAD")
 	output, err := cmd.Output()
 	if err != nil {
 		return nil, fmt.Errorf("error getting merge-base: %w", err)
@@ -34,7 +34,7 @@ func NewDiffRange(opts ...DiffOpt) (*DiffRange, error) {
 
 	d := &DiffRange{
 		StartCommit: strings.TrimSpace(string(output)),
-		EndCommit:   "HEAD^",
+		EndCommit:   "HEAD",
 	}
 
 	for _, opt := range opts {
@@ -58,4 +58,17 @@ func (d *DiffRange) GetChangedFiles() ([]string, error) {
 
 	return files, nil
 
+}
+
+func (d *DiffRange) GetFileDiff(file string) (*string, error) {
+
+	cmd := exec.Command("git", "diff", d.StartCommit, d.EndCommit, file)
+	output, err := cmd.Output()
+	if err != nil {
+		return nil, fmt.Errorf("error getting file diff: %w", err)
+	}
+
+	out_str := strings.TrimSpace(string(output))
+
+	return &out_str, nil
 }

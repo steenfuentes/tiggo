@@ -7,6 +7,7 @@ import (
 
 	"github.com/joho/godotenv"
 
+	"github.com/steenfuentes/gogit/internal/analyze"
 	"github.com/steenfuentes/gogit/internal/git"
 	"github.com/steenfuentes/gogit/internal/llm"
 )
@@ -24,28 +25,27 @@ func main() {
 
 	client := llm.NewLLMClient("anthropic", apiKey)
 
-	resp, err := client.SendMessage("Hello, World!")
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-
-	if len(resp.Content) > 0 {
-		fmt.Printf("Response: %s\n", resp.Content[0].Text)
-	}
-
 	diffRange, err := git.NewDiffRange()
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
 		return
 	}
 
-	changedFiles, err := diffRange.GetChangedFiles()
+	analyzer := &analyze.Analyzer{
+		LLMClient: client,
+		DiffRange: diffRange,
+	}
+
+	err = analyzer.DoAnalysis()
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
 		return
 	}
 
-	fmt.Print(changedFiles)
+	err = analyzer.Summarize("summary.md")
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
 
 }
