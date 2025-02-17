@@ -29,7 +29,7 @@ func ParseFlags() (*Config, error) {
 		fmt.Printf("  tiggo abc123 def456     # Analyze changes between two commits\n")
 		fmt.Printf("  tiggo def456 -p 5       # Analyze 5 commits before def456\n")
 		fmt.Printf("  tiggo -p 3              # Analyze last 3 commits from HEAD\n")
-		fmt.Printf("  tiggo                    # Analyze changes from merge-base with main to HEAD\n")
+		fmt.Printf("  tiggo                   # Analyze changes from merge-base with main to HEAD\n")
 	}
 
 	flag.Parse()
