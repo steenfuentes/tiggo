@@ -52,17 +52,9 @@ tiggo/
    go mod tidy
    ```
 
-3. **Build the application manually:**
+3. **Install**
 
-   ```bash
-   go build -o tiggo ./tiggo.go
-   ```
-
-   This will create a `tiggo` executable in the current directory.
-   If you want to install it globally, you can use the installation
-   script, or copy the `tiggo` executable to a directory in your PATH.
-
-4. **(Optional) Install using the provided script:**
+   **Install using the provided script:**
 
    The installation script will build the executable and copy it to a directory in your PATH.
 
@@ -72,6 +64,18 @@ tiggo/
    ```
 
    The script checks for Go, builds the executable, and installs it to `/usr/local/bin` (or `$HOME/.local/bin` if needed). After installation, you might need to restart your terminal or run `source ~/.bashrc` or `source ~/.zshrc`.
+
+   **OR**
+
+   **Build the application manually:**
+
+   ```bash
+   go build -o tiggo ./tig.go
+   ```
+
+   This will create a `tiggo` executable in the current directory.
+   If you want to install it globally, you can use the installation
+   script, or copy the `tiggo` executable to a directory in your PATH (e.g. `/usr/local/bin`).
 
 ## Usage
 

@@ -2,8 +2,7 @@
 *.exe
 *.o
 main
-gogit
-gogit.exe
+tiggo
 
 # Test binaries
 *_test
