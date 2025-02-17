@@ -44,7 +44,7 @@ func NewDiffRange(opts ...DiffOpt) (*DiffRange, error) {
 	return d, nil
 }
 
-func (d *DiffRange) GetChangedFiles() ([]string, error) {
+func (d *DiffRange) GetModifiedFilepaths() ([]string, error) {
 
 	cmd := exec.Command("git", "diff", d.StartCommit, d.EndCommit, "--name-only")
 	output, err := cmd.Output()

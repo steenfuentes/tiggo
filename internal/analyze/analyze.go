@@ -95,20 +95,28 @@ func (fa *FileAnalysis) String() string {
 
 func (a *Analyzer) DoAnalysis() error {
 
-	files, err := a.DiffRange.GetChangedFiles()
+	files, err := a.DiffRange.GetModifiedFilepaths()
 	if err != nil {
 		return err
+	}
+
+	// We also get files that have been deleted, so we filter them out
+	currFiles := make([]string, 0)
+	for _, file := range files {
+		if _, err := os.Stat(file); err == nil {
+			currFiles = append(currFiles, file)
+		}
 	}
 
 	errChan := make(chan error, len(files))
 
 	var wg sync.WaitGroup
 
-	a.FileAnalyses = make([]FileAnalysis, len(files))
+	a.FileAnalyses = make([]FileAnalysis, len(currFiles))
 
 	sem := make(chan struct{}, 5)
 
-	for i, file := range files {
+	for i, file := range currFiles {
 		wg.Add(1)
 		go func(i int, file string) {
 			defer wg.Done()
