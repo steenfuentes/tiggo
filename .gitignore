@@ -2,6 +2,8 @@
 *.exe
 *.o
 main
+gogit
+gogit.exe
 
 # Test binaries
 *_test

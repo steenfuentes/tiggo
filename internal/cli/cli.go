@@ -1,4 +1,3 @@
-// cmd/cli/cli.go
 package cli
 
 import (
@@ -17,10 +16,8 @@ type Config struct {
 func ParseFlags() (*Config, error) {
 	var config Config
 
-	// Define flags
 	prevCount := flag.Int("p", 0, "Number of previous commits to include")
 
-	// Custom usage message
 	flag.Usage = func() {
 		fmt.Printf("Usage of gogit:\n")
 		fmt.Printf("  gogit [flags] [start-commit] [end-commit]\n")
@@ -36,18 +33,15 @@ func ParseFlags() (*Config, error) {
 
 	flag.Parse()
 
-	// Process non-flag arguments
 	args := flag.Args()
 
 	switch len(args) {
 	case 0:
-		// Only flags provided (or nothing)
 		if *prevCount > 0 {
 			config.EndCommit = "HEAD"
 			config.PrevCount = *prevCount
 		}
 	case 1:
-		// Single commit provided
 		if *prevCount > 0 {
 			config.EndCommit = args[0]
 			config.PrevCount = *prevCount
@@ -55,7 +49,6 @@ func ParseFlags() (*Config, error) {
 			return nil, fmt.Errorf("when providing single commit, -p flag is required")
 		}
 	case 2:
-		// Two commits provided
 		if *prevCount > 0 {
 			return nil, fmt.Errorf("cannot use -p flag with two commits")
 		}
@@ -70,7 +63,6 @@ func ParseFlags() (*Config, error) {
 
 func BuildDiffRange(config *Config) (*git.DiffRange, error) {
 	if config.StartCommit != "" && config.EndCommit != "" {
-		// Case 1: Explicit start and end commits
 		return git.NewDiffRange(
 			git.WithStart(config.StartCommit),
 			git.WithEnd(config.EndCommit),
@@ -78,10 +70,8 @@ func BuildDiffRange(config *Config) (*git.DiffRange, error) {
 	}
 
 	if config.PrevCount > 0 {
-		// Case 2 & 3: Using previous commit count
 		return git.NewDiffRangeWithCount(config.EndCommit, config.PrevCount)
 	}
 
-	// Default case: Use merge-base
 	return git.NewDiffRange()
 }
