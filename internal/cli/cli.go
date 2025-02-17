@@ -19,17 +19,17 @@ func ParseFlags() (*Config, error) {
 	prevCount := flag.Int("p", 0, "Number of previous commits to include")
 
 	flag.Usage = func() {
-		fmt.Printf("Usage of gogit:\n")
-		fmt.Printf("  gogit [flags] [start-commit] [end-commit]\n")
-		fmt.Printf("  gogit [flags] [end-commit]\n")
-		fmt.Printf("  gogit [flags]\n\n")
+		fmt.Printf("Usage of tiggo:\n")
+		fmt.Printf("  tiggo [flags] [start-commit] [end-commit]\n")
+		fmt.Printf("  tiggo [flags] [end-commit]\n")
+		fmt.Printf("  tiggo [flags]\n\n")
 		fmt.Printf("Flags:\n")
 		flag.PrintDefaults()
 		fmt.Printf("\nExamples:\n")
-		fmt.Printf("  gogit abc123 def456     # Analyze changes between two commits\n")
-		fmt.Printf("  gogit def456 -p 5       # Analyze 5 commits before def456\n")
-		fmt.Printf("  gogit -p 3              # Analyze last 3 commits from HEAD\n")
-		fmt.Printf("  gogit                    # Analyze changes from merge-base with main to HEAD\n")
+		fmt.Printf("  tiggo abc123 def456     # Analyze changes between two commits\n")
+		fmt.Printf("  tiggo def456 -p 5       # Analyze 5 commits before def456\n")
+		fmt.Printf("  tiggo -p 3              # Analyze last 3 commits from HEAD\n")
+		fmt.Printf("  tiggo                    # Analyze changes from merge-base with main to HEAD\n")
 	}
 
 	flag.Parse()

@@ -6,14 +6,14 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-echo "Installing gogit..."
+echo "Installing tiggo..."
 
 if ! command -v go &> /dev/null; then
     echo -e "${RED}Error: Go is not installed${NC}"
     echo "Please install Go from https://golang.org/doc/install"
     exit 1
 fi
-go build -o gogit
+go build -o tiggo
 
 INSTALL_DIR="/usr/local/bin"
 if [[ ":$PATH:" != *":/usr/local/bin:"* ]]; then
@@ -29,13 +29,13 @@ if [[ ":$PATH:" != *":/usr/local/bin:"* ]]; then
 fi
 
 echo "Installing to $INSTALL_DIR..."
-echo "Requesting sudo permission to copy gogit executable to $INSTALL_DIR..."
-sudo cp gogit "$INSTALL_DIR/gogit" 2>/dev/null || cp gogit "$INSTALL_DIR/gogit"
+echo "Requesting sudo permission to copy tiggo executable to $INSTALL_DIR..."
+sudo cp tiggo "$INSTALL_DIR/tiggo" 2>/dev/null || cp tiggo "$INSTALL_DIR/tiggo"
 
 # Clean up after ourselves
-rm gogit
+rm tiggo
 
-echo "gogit is installed in $INSTALL_DIR"
+echo "tiggo is installed in $INSTALL_DIR"
 echo -e "${GREEN}Installation complete!${NC}"
-echo "You may need to restart your terminal or run 'source ~/.bashrc (or ~/.zshrc)' to use gogit"
-echo "Use gogit by running 'gogit' in your terminal. Use 'gogit --help' for more information."
+echo "You may need to restart your terminal or run 'source ~/.bashrc (or ~/.zshrc)' to use tiggo"
+echo "Use tiggo by running 'tiggo' in your terminal. Use 'tiggo --help' for more information."
