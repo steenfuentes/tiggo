@@ -1,6 +1,6 @@
 # tiggo
 
-**tiggo** is a command-line tool for developers that automatically generates summaries of code changes to use in PR descriptions. It analyzes changes between git commits using Git commands and leverages LLM APIs (currently only Anthropic’s API) to create high-quality, comprehensive PR descriptions. The tool is designed to reduce the overhead of writing a PR summary by hand.
+**tiggo** is a command-line tool for devs to supplement their git workflows using LLMs.
 
 ## Features
 
@@ -9,7 +9,7 @@
 ### Planned Features
 
 - Support for multiple LLM APIs
-- More control over the app configs (e.g. prompt templates)
+- More control over the app configs (e.g. prompt templates, output format, etc.)
 - Integration with Github CLI for fully automated PR creation
 
 ## Project Structure
