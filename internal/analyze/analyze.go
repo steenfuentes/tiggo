@@ -8,9 +8,9 @@ import (
 	"sync"
 	"text/template"
 
-	"github.com/steenfuentes/gogit/internal/git"
-	"github.com/steenfuentes/gogit/internal/llm"
-	"github.com/steenfuentes/gogit/internal/prompt"
+	"github.com/steenfuentes/tiggo/internal/git"
+	"github.com/steenfuentes/tiggo/internal/llm"
+	"github.com/steenfuentes/tiggo/internal/prompt"
 )
 
 func GetFileContent(path string) (*string, error) {

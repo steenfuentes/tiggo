@@ -7,9 +7,9 @@ import (
 
 	"github.com/joho/godotenv"
 
-	"github.com/steenfuentes/gogit/internal/analyze"
-	"github.com/steenfuentes/gogit/internal/cli"
-	"github.com/steenfuentes/gogit/internal/llm"
+	"github.com/steenfuentes/tiggo/internal/analyze"
+	"github.com/steenfuentes/tiggo/internal/cli"
+	"github.com/steenfuentes/tiggo/internal/llm"
 )
 
 func main() {

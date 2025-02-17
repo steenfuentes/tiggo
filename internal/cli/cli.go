@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/steenfuentes/gogit/internal/git"
+	"github.com/steenfuentes/tiggo/internal/git"
 )
 
 type Config struct {

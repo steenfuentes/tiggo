@@ -1,4 +1,4 @@
-module github.com/steenfuentes/gogit
+module github.com/steenfuentes/tiggo
 
 go 1.23.5
 
