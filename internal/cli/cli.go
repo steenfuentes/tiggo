@@ -29,6 +29,7 @@ func ParseFlags() (*Config, error) {
 		fmt.Printf("  gogit abc123 def456     # Analyze changes between two commits\n")
 		fmt.Printf("  gogit def456 -p 5       # Analyze 5 commits before def456\n")
 		fmt.Printf("  gogit -p 3              # Analyze last 3 commits from HEAD\n")
+		fmt.Printf("  gogit                    # Analyze changes from merge-base with main to HEAD\n")
 	}
 
 	flag.Parse()

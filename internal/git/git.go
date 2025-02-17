@@ -26,7 +26,7 @@ func WithEnd(end string) DiffOpt {
 }
 
 func NewDiffRange(opts ...DiffOpt) (*DiffRange, error) {
-	cmd := exec.Command("git", "merge-base", "origin/main", "HEAD")
+	cmd := exec.Command("git", "merge-base", "main", "HEAD")
 	output, err := cmd.Output()
 	if err != nil {
 		return nil, fmt.Errorf("error getting merge-base: %w", err)

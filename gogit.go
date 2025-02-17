@@ -29,7 +29,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Build DiffRange from config
 	diffRange, err := cli.BuildDiffRange(config)
 	if err != nil {
 		fmt.Printf("Error creating diff range: %v\n", err)

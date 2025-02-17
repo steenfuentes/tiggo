@@ -29,7 +29,13 @@ if [[ ":$PATH:" != *":/usr/local/bin:"* ]]; then
 fi
 
 echo "Installing to $INSTALL_DIR..."
+echo "Requesting sudo permission to copy gogit executable to $INSTALL_DIR..."
 sudo cp gogit "$INSTALL_DIR/gogit" 2>/dev/null || cp gogit "$INSTALL_DIR/gogit"
 
+# Clean up after ourselves
+rm gogit
+
+echo "gogit is installed in $INSTALL_DIR"
 echo -e "${GREEN}Installation complete!${NC}"
 echo "You may need to restart your terminal or run 'source ~/.bashrc (or ~/.zshrc)' to use gogit"
+echo "Use gogit by running 'gogit' in your terminal. Use 'gogit --help' for more information."
