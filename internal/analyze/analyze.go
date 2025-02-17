@@ -10,17 +10,8 @@ import (
 
 	"github.com/steenfuentes/gogit/internal/git"
 	"github.com/steenfuentes/gogit/internal/llm"
+	"github.com/steenfuentes/gogit/internal/prompt"
 )
-
-var SUM_PROMPT = `Generate a summary of the following code containing file. The summary
- should be an overview of the functionality that the code within the file offers. Do not
- include any introduction or sign off of your own in the response. Only include the summary in your response.`
-
-var DIFF_SUM_PROMPT = `Use the supplied output of a 'git diff' command for a single file
-  to summarize the changes made. Be very detailed and objective with the analyses, but
-  make no attempts to infer the impact of the changes. Generate a change summary for each
-  change in the diff and be sure to reference the line numbers within each summary. Do not include any introduction or
-  sign off of your own in the response. Only include the summary in your response.`
 
 func GetFileContent(path string) (*string, error) {
 
@@ -56,7 +47,7 @@ func (fa *FileAnalysis) AddFileSummary(llmClient *llm.LLMClient) error {
 		return err
 	}
 
-	content := SUM_PROMPT + *fileContent
+	content := prompt.SUM_PROMPT + *fileContent
 
 	resp, err := llmClient.SendMessage(content)
 	if err != nil {
@@ -77,7 +68,7 @@ func (fa *FileAnalysis) AddDiffSummary(
 		return err
 	}
 
-	content := DIFF_SUM_PROMPT + *fileDiff
+	content := prompt.DIFF_SUM_PROMPT + *fileDiff
 
 	resp, err := llmClient.SendMessage(content)
 	if err != nil {
@@ -180,17 +171,13 @@ type PromptData struct {
 	FileAnalyses string
 }
 
-func injectFileAnalyses(templatePath string, analyses string) (string, error) {
-	content, err := os.ReadFile(templatePath)
-	if err != nil {
-		return "", fmt.Errorf("failed to read template: %w", err)
-	}
+func injectFileAnalyses(promptTemplate string, analyses string) (string, error) {
 
 	data := PromptData{
 		FileAnalyses: analyses,
 	}
 
-	tmpl, err := template.New("prompt").Parse(string(content))
+	tmpl, err := template.New("prompt").Parse(promptTemplate)
 	if err != nil {
 		return "", fmt.Errorf("failed to parse template: %w", err)
 	}
@@ -207,7 +194,7 @@ func (a *Analyzer) Summarize(outPath string) error {
 
 	analyses := a.AnalysesAsString()
 
-	prompt, err := injectFileAnalyses("system_prompt.md", *analyses)
+	prompt, err := injectFileAnalyses(prompt.SYSTEM_PROMPT, *analyses)
 	if err != nil {
 		return err
 	}

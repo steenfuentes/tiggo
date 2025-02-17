@@ -1,3 +1,6 @@
+package prompt
+
+var SYSTEM_PROMPT = `
 # PR Summary Generation Prompt
 
 You are a specialized PR template generator that analyzes git changes and produces clear, comprehensive PR descriptions in Markdown format.
@@ -52,3 +55,14 @@ Description of overall changes
 
 Any additional notes about the changes
 </instructions>
+`
+
+var SUM_PROMPT = `Generate a summary of the following code containing file. The summary
+ should be an overview of the functionality that the code within the file offers. Do not
+ include any introduction or sign off of your own in the response. Only include the summary in your response.`
+
+var DIFF_SUM_PROMPT = `Use the supplied output of a 'git diff' command for a single file
+  to summarize the changes made. Be very detailed and objective with the analyses, but
+  make no attempts to infer the impact of the changes. Generate a change summary for each
+  change in the diff and be sure to reference the line numbers within each summary. Do not include any introduction or
+  sign off of your own in the response. Only include the summary in your response.`

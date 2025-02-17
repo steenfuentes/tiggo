@@ -72,3 +72,28 @@ func (d *DiffRange) GetFileDiff(file string) (*string, error) {
 
 	return &out_str, nil
 }
+
+func GetStartCommitFromCount(endCommit string, count int) (string, error) {
+	cmd := exec.Command("git", "rev-parse", fmt.Sprintf("%s~%d", endCommit, count))
+	output, err := cmd.Output()
+	if err != nil {
+		return "", fmt.Errorf("error calculating start commit: %w", err)
+	}
+	return strings.TrimSpace(string(output)), nil
+}
+
+func NewDiffRangeWithCount(endCommit string, count int) (*DiffRange, error) {
+	if endCommit == "" {
+		endCommit = "HEAD"
+	}
+
+	startCommit, err := GetStartCommitFromCount(endCommit, count)
+	if err != nil {
+		return nil, err
+	}
+
+	return &DiffRange{
+		StartCommit: startCommit,
+		EndCommit:   endCommit,
+	}, nil
+}

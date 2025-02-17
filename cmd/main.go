@@ -8,7 +8,7 @@ import (
 	"github.com/joho/godotenv"
 
 	"github.com/steenfuentes/gogit/internal/analyze"
-	"github.com/steenfuentes/gogit/internal/git"
+	"github.com/steenfuentes/gogit/internal/cli"
 	"github.com/steenfuentes/gogit/internal/llm"
 )
 
@@ -23,29 +23,34 @@ func main() {
 		log.Fatal("NO API KEY FOUND")
 	}
 
-	client := llm.NewLLMClient("anthropic", apiKey)
-
-	diffRange, err := git.NewDiffRange()
+	config, err := cli.ParseFlags()
 	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
+		fmt.Printf("Error parsing arguments: %v\n", err)
+		os.Exit(1)
 	}
+
+	// Build DiffRange from config
+	diffRange, err := cli.BuildDiffRange(config)
+	if err != nil {
+		fmt.Printf("Error creating diff range: %v\n", err)
+		os.Exit(1)
+	}
+
+	client := llm.NewLLMClient("anthropic", apiKey)
 
 	analyzer := &analyze.Analyzer{
 		LLMClient: client,
 		DiffRange: diffRange,
 	}
 
-	err = analyzer.DoAnalysis()
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
+	if err := analyzer.DoAnalysis(); err != nil {
+		fmt.Printf("Error performing analysis: %v\n", err)
+		os.Exit(1)
 	}
 
-	err = analyzer.Summarize("summary.md")
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
+	if err := analyzer.Summarize("summary.md"); err != nil {
+		fmt.Printf("Error writing summary: %v\n", err)
+		os.Exit(1)
 	}
 
 }
