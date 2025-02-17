@@ -40,6 +40,12 @@ func main() {
 		return
 	}
 
-	fmt.Print(diffRange)
+	changedFiles, err := diffRange.GetChangedFiles()
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+
+	fmt.Print(changedFiles)
 
 }

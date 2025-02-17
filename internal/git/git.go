@@ -1,7 +1,6 @@
 package git
 
 import (
-	"bytes"
 	"fmt"
 	"os/exec"
 	"strings"
@@ -35,7 +34,7 @@ func NewDiffRange(opts ...DiffOpt) (*DiffRange, error) {
 
 	d := &DiffRange{
 		StartCommit: strings.TrimSpace(string(output)),
-		EndCommit:   "HEAD",
+		EndCommit:   "HEAD^",
 	}
 
 	for _, opt := range opts {
@@ -45,7 +44,7 @@ func NewDiffRange(opts ...DiffOpt) (*DiffRange, error) {
 	return d, nil
 }
 
-func (d *DiffRange) GetChangedFiles() ([][]byte, error) {
+func (d *DiffRange) GetChangedFiles() ([]string, error) {
 
 	cmd := exec.Command("git", "diff", d.StartCommit, d.EndCommit, "--name-only")
 	output, err := cmd.Output()
@@ -53,7 +52,9 @@ func (d *DiffRange) GetChangedFiles() ([][]byte, error) {
 		return nil, fmt.Errorf("error getting diff: %w", err)
 	}
 
-	files := bytes.Split(output, []byte("\n"))
+	out_str := strings.TrimSpace(string(output))
+
+	files := strings.Split(out_str, "\n")
 
 	return files, nil
 
